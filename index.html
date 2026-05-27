@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chumbada | Catálogo de Acessórios</title>
+  <style>
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #0f1512; color: #fff; font-family: Arial, sans-serif; }
+    p { font-size: 18px; }
+  </style>
+</head>
+<body>
+  <p>Carregando catálogo...</p>
+  <script>
+    (async () => {
+      const parts = ["chunks/site-01.txt","chunks/site-02.txt","chunks/site-03.txt","chunks/site-04.txt","chunks/site-05.txt","chunks/site-06.txt","chunks/site-07.txt"];
+      const encoded = (await Promise.all(parts.map(async (path) => {
+        const response = await fetch(path);
+        if (!response.ok) throw new Error('Falha ao carregar ' + path);
+        return response.text();
+      }))).join('');
+      const bytes = Uint8Array.from(atob(encoded), (char) => char.charCodeAt(0));
+      const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
+      const html = await new Response(stream).text();
+      document.open();
+      document.write(html);
+      document.close();
+    })();
+  </script>
+</body>
+</html>
