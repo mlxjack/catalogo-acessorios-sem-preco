@@ -13,7 +13,7 @@
   <p>Carregando catálogo...</p>
   <script>
     (async () => {
-      const parts = ["chunks/site-01.txt","chunks/site-02.txt","chunks/site-03.txt","chunks/site-04.txt","chunks/site-05.txt","chunks/site-06.txt","chunks/site-07.txt"];
+      const parts = ["chunks/site-01.txt","chunks/site-02.txt","chunks/site-03.txt","chunks/site-04.txt","chunks/site-05.txt","chunks/site-05-tail.txt","chunks/site-06.txt","chunks/site-07.txt"];
       const encoded = (await Promise.all(parts.map(async (path) => {
         const response = await fetch(path);
         if (!response.ok) throw new Error('Falha ao carregar ' + path);
